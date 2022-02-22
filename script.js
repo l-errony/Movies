@@ -1,33 +1,18 @@
- let numberOfFilms;
-
-function start(){
-     numberOfFilms = +prompt('Сколько фильмов вы уже просмотрели?', "");
-
-    while( numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)){
-        numberOfFilms = +prompt('Сколько фильмов вы уже просмотрели?', "");
-    }
-}
-//start();
 
 const personalMovieDB = {
-    count: numberOfFilms,
+    count: 0,
     movies: {},
     actors: {},
     genres: [],
-    privet: false
-};
-
-/* const a = prompt('Один из последних просмотренных фильмов?', ""),
-    b = prompt('На сколько вы оцените его?', ""),
-    с = prompt('Один из последних просмотренных фильмов?', ""),
-    d = prompt('На сколько вы оцените его?', "");
-
-
-personalMovieDB.movies[a] = b; //лучше через квадратные скобки чтоб без багов и всё работало
-personalMovieDB.movies[с] = d; */
-
-
-function rememberMyFilms(){
+    privet: false,
+    start: function(){
+        personalMovieDB.count = +prompt('Сколько фильмов вы уже просмотрели?', "");
+   
+       while( personalMovieDB.count == '' || personalMovieDB.count == null || isNaN(personalMovieDB.count)){
+        personalMovieDB.count = +prompt('Сколько фильмов вы уже просмотрели?', "");
+       }
+   },
+   rememberMyFilms: function(){
     for (let i=0; i<2; i++){
         const a = prompt('Один из последних просмотренных фильмов?', "");
         const b = prompt('На сколько вы оцените его?', "");
@@ -40,35 +25,85 @@ function rememberMyFilms(){
             i--;
             }
          }
-}
-//rememberMyFilms();
+    },
+    detectPersonalLevel: function(){
+        if (personalMovieDB.count<10){
+            console.log("Просмотрено довольно мало фильмов!");
+        } else if (personalMovieDB.count>=10 && personalMovieDB.count<30){
+            console.log("Вы классический зритель");
+        } else if (personalMovieDB.count>=30){
+            console.log("Вы киноман");
+        }else{
+            console.log("Произошла ошибка");
+        }
+    },
+    showMyDB: function (hidden){
+        if(!hidden){
+            console.log(personalMovieDB);
+        }
+    },
+    toggleVisibleMyDB: function(){
+        if(personalMovieDB.privet){
+            personalMovieDB.privet=false;
+        }else{
+            personalMovieDB.privet = true;
+        }
+    },
+    writeYourGenres: function(){
+        /* for (let i = 1; i<=3; i++){
+            const genre = prompt(`Ваш любимый жанр под номером ${i}`);
 
-function detectPersonalLevel(){
-    if (personalMovieDB.count<10){
-        console.log("Просмотрено довольно мало фильмов!");
-    } else if (personalMovieDB.count>=10 && personalMovieDB.count<30){
-        console.log("Вы классический зритель");
-    } else if (personalMovieDB.count>=30){
-        console.log("Вы киноман");
-    }else{
-        console.log("Произошла ошибка");
+            if(genre == "" || genre == null){
+                console.log('Вы ввели неккоректные данные или не ввели их вовсе');
+                i--;
+            }else{
+                 personalMovieDB.genres[i-1] = genre; 
+             } //так как и началось с  нуля */
+             //ИЛИ ТАК
+             for(let i = 1; i<2; i++){
+                const genre = prompt(`Введите ваши любимые жанры через запятую`).toLowerCase;
+
+                if(genre == "" || genre == null){
+                    console.log('Вы ввели неккоректные данные или не ввели их вовсе');
+                    i--;
+                }else{
+                     personalMovieDB.genres = genre.split(', ');  //метод строк, который разделяет на элементы массивов через заданый разделитель
+                     personalMovieDB.genres.sort();
+             }
+        }
+
+        personalMovieDB.genres.forEach((item, i)=>{
+            console.log(`Любимый жанр ${i+1} - это ${item}`);
+        });
     }
-}
-//detectPersonalLevel();
+    
+};
 
-function showMyDB (hidden){
-    if(!hidden){
-        console.log(personalMovieDB);
-    }
-}
 
-showMyDB (personalMovieDB.privet);
 
-function writeYourGenres(){
-    for (let i = 1; i<=3; i++){
-        const genre = prompt(`Ваш любимый жанр под номером ${i}`);
-        personalMovieDB.genres[i-1] = genre;  //так как и началось с  нуля
-    }
-}
 
-writeYourGenres();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* const a = prompt('Один из последних просмотренных фильмов?', ""),
+    b = prompt('На сколько вы оцените его?', ""),
+    с = prompt('Один из последних просмотренных фильмов?', ""),
+    d = prompt('На сколько вы оцените его?', "");
+
+
+personalMovieDB.movies[a] = b; //лучше через квадратные скобки чтоб без багов и всё работало
+personalMovieDB.movies[с] = d; */
+
